@@ -59,7 +59,7 @@ func (m *DatabaseWorkspace) ColumnType(ctx context.Context,
 }
 
 // Tables returns a list of tables in the database as a comma-separated string
-func (m *DatabaseWorkspace) Tables(ctx context.Context, conn *dagger.Secret, schema string) (string, error) {
+func (m *DatabaseWorkspace) Tables(ctx context.Context, schema string) (string, error) {
 	c, err := m.Conn.Plaintext(ctx)
 	if err != nil {
 		return "", err
