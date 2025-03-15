@@ -9,7 +9,7 @@ import (
 	"github.com/jackc/pgx/v5"
 )
 
-type DatabaseWorkspace struct {
+type PostgresWorkspace struct {
 	// +internal-use-only
 	Conn *dagger.Secret
 }
@@ -17,12 +17,12 @@ type DatabaseWorkspace struct {
 func New(
 	// The connection string to the database
 	conn *dagger.Secret,
-) *DatabaseWorkspace {
-	return &DatabaseWorkspace{Conn: conn}
+) *PostgresWorkspace {
+	return &PostgresWorkspace{Conn: conn}
 }
 
 // Get the type of a column in a table as a string
-func (m *DatabaseWorkspace) ColumnType(ctx context.Context,
+func (m *PostgresWorkspace) ColumnType(ctx context.Context,
 	// The table to get the column type from
 	table string,
 	// The column to get the type of
@@ -59,7 +59,7 @@ func (m *DatabaseWorkspace) ColumnType(ctx context.Context,
 }
 
 // Tables returns a list of tables in the database as a comma-separated string
-func (m *DatabaseWorkspace) Tables(ctx context.Context, schema string) (string, error) {
+func (m *PostgresWorkspace) Tables(ctx context.Context, schema string) (string, error) {
 	c, err := m.Conn.Plaintext(ctx)
 	if err != nil {
 		return "", err
@@ -93,7 +93,7 @@ func (m *DatabaseWorkspace) Tables(ctx context.Context, schema string) (string, 
 }
 
 // TableColumns returns a list of columns in a table as a comma-separated string
-func (m *DatabaseWorkspace) TableColumns(ctx context.Context, schema string, name string) (string, error) {
+func (m *PostgresWorkspace) TableColumns(ctx context.Context, schema string, name string) (string, error) {
 	c, err := m.Conn.Plaintext(ctx)
 	if err != nil {
 		return "", err
